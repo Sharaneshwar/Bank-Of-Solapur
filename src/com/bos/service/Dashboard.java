@@ -152,8 +152,36 @@ public class Dashboard extends JFrame {
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setBounds(255, 40, 3, 190);
 		myProfileSection.add(separator);
+		
+		JLabel iconAccountNo = new JLabel("");
+		iconAccountNo.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/acc_no_icon.png")));
+		iconAccountNo.setForeground(Color.DARK_GRAY);
+		iconAccountNo.setFont(new Font("Euclid Circular A", Font.PLAIN, 16));
+		iconAccountNo.setBounds(278, 92, 25, 25);
+		myProfileSection.add(iconAccountNo);
+		
+		accountNo = new JPasswordField(al.get(0));
+		accountNo.setEchoChar('X');
+		accountNo.setBorder(null);
+		accountNo.setOpaque(false);
+		accountNo.setEditable(false);
+		accountNo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(accountNo.getEchoChar() == 'X') {
+					accountNo.setEchoChar((char)0);
+				} else {
+					accountNo.setEchoChar('X');
+				}
+			}
+		});
+		accountNo.setEchoChar('X');
+		accountNo.setForeground(Color.DARK_GRAY);
+		accountNo.setFont(new Font("Euclid Circular A", Font.PLAIN, 16));
+		accountNo.setBounds(313, 92, 252, 25);
+		myProfileSection.add(accountNo);
 
-		JLabel name = new JLabel(al.get(0));
+		JLabel name = new JLabel(al.get(1));
 		name.setForeground(Color.BLACK);
 		name.setHorizontalTextPosition(SwingConstants.CENTER);
 		name.setHorizontalAlignment(SwingConstants.LEFT);
@@ -181,7 +209,7 @@ public class Dashboard extends JFrame {
 		iconMobile.setBounds(278, 164, 25, 25);
 		myProfileSection.add(iconMobile);
 
-		JLabel mobileNo = new JLabel(al.get(1));
+		JLabel mobileNo = new JLabel(al.get(2));
 		mobileNo.setForeground(Color.DARK_GRAY);
 		mobileNo.setFont(new Font("Euclid Circular A", Font.PLAIN, 16));
 		mobileNo.setBounds(313, 164, 252, 25);
@@ -194,7 +222,7 @@ public class Dashboard extends JFrame {
 		iconDob.setBounds(278, 200, 25, 25);
 		myProfileSection.add(iconDob);
 
-		JLabel dob = new JLabel(al.get(2));
+		JLabel dob = new JLabel(al.get(3));
 		dob.setForeground(Color.DARK_GRAY);
 		dob.setFont(new Font("Euclid Circular A", Font.PLAIN, 16));
 		dob.setBounds(313, 200, 252, 25);
@@ -260,34 +288,6 @@ public class Dashboard extends JFrame {
 		applyLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		applyLabel.setBounds(0, 153, 549, 40);
 		advertisementPanel.add(applyLabel);
-		
-		JLabel iconAccountNo = new JLabel("");
-		iconAccountNo.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/acc_no_icon.png")));
-		iconAccountNo.setForeground(Color.DARK_GRAY);
-		iconAccountNo.setFont(new Font("Euclid Circular A", Font.PLAIN, 16));
-		iconAccountNo.setBounds(278, 92, 25, 25);
-		myProfileSection.add(iconAccountNo);
-		
-		accountNo = new JPasswordField("<dynamic>");
-		accountNo.setEchoChar('X');
-		accountNo.setBorder(null);
-		accountNo.setOpaque(false);
-		accountNo.setEditable(false);
-		accountNo.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(accountNo.getEchoChar() == 'X') {
-					accountNo.setEchoChar((char)0);
-				} else {
-					accountNo.setEchoChar('X');
-				}
-			}
-		});
-		accountNo.setEchoChar('X');
-		accountNo.setForeground(Color.DARK_GRAY);
-		accountNo.setFont(new Font("Euclid Circular A", Font.PLAIN, 16));
-		accountNo.setBounds(313, 92, 252, 25);
-		myProfileSection.add(accountNo);
 
 		JPanel hamburger_panel = new JPanel();
 		hamburger_panel.setOpaque(false);

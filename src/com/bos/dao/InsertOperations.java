@@ -46,4 +46,39 @@ public class InsertOperations implements DatabaseConstants{
 		}
 		return rows;
 	}
+	
+	public int insert_into_account_details(String username) {
+		int rows = 0;
+		try {
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			ps = con.prepareStatement("INSERT INTO account_details (ID, EMAIL_ID, ACCOUNT_NO, BALANCE) VALUES (?, ?, ?, ?)");
+			int id = new SelectOperations().select_id_from_registration_table(username);
+			if (ps != null) {
+				ps.setInt(1, id);
+				ps.setString(2, username);
+				ps.setString(3, String.format("34127856%04d", id));
+				ps.setString(4, "1000.00");
+				rows = ps.executeUpdate();
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return rows;
+	}
 }

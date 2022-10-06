@@ -164,6 +164,7 @@ public class LoginPage extends JFrame {
 		loginPanel.setLayout(null);
 
 		JLabel lblUsername = new JLabel("Username");
+		lblUsername.setFocusable(true);
 		lblUsername.setForeground(Color.BLACK);
 		lblUsername.setFont(new Font("Euclid Circular A", Font.BOLD, 17));
 		lblUsername.setBounds(42, 68, 105, 29);

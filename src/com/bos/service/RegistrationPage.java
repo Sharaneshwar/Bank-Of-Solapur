@@ -570,8 +570,9 @@ public class RegistrationPage extends JFrame {
 					al.add(String.valueOf(password.getPassword()));
 
 					InsertOperations io = new InsertOperations();
-					int rows = io.insert_into_registration_table(al);
-					if (rows == 0) {
+					int rows1 = io.insert_into_registration_table(al);
+					int rows2 = io.insert_into_account_details(emailID.getText());
+					if (rows1 == 0 || rows2 == 0) {
 						JOptionPane.showMessageDialog(null, "Registration Failed! Try Again", "Failed",
 								JOptionPane.ERROR_MESSAGE);
 					} else {

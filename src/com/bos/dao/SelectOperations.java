@@ -18,6 +18,12 @@ public class SelectOperations implements DatabaseConstants {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			st = con.createStatement();
+			
+			rs = st.executeQuery("SELECT ACCOUNT_NO FROM account_details WHERE EMAIL_ID = '" + username + "'");
+			while (rs.next()) {
+				al.add(rs.getString("ACCOUNT_NO"));
+			}
+			
 			rs = st.executeQuery("SELECT FULL_NAME, MOBILE_NO, DOB, GENDER FROM REGISTRATION_TABLE WHERE EMAIL_ID = '"
 					+ username + "'");
 			while (rs.next()) {
@@ -48,5 +54,39 @@ public class SelectOperations implements DatabaseConstants {
 			}
 		}
 		return al;
+	}
+
+	public int select_id_from_registration_table(String username) {
+		int id = 0;
+		try {
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT ID FROM REGISTRATION_TABLE WHERE EMAIL_ID = '" + username + "'");
+			while (rs.next()) {
+				id = Integer.parseInt(rs.getString("ID"));
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return id;
 	}
 }
