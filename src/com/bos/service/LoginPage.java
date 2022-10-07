@@ -30,7 +30,6 @@ public class LoginPage extends JFrame {
 	private JPanel contentPane;
 	private JTextField username;
 	private JPasswordField password;
-	CheckUsernamePassword cup = new CheckUsernamePassword();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -50,6 +49,7 @@ public class LoginPage extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginPage() {
+		CheckUsernamePassword cup = new CheckUsernamePassword();
 		cup.select_username_password();
 		
 		setBackground(Color.WHITE);
@@ -183,13 +183,12 @@ public class LoginPage extends JFrame {
 		loginPanel.add(s1);
 
 		username = new JTextField();
-		username.setToolTipText("");
 		username.setOpaque(false);
 		username.setFont(new Font("Euclid Circular A", Font.PLAIN, 16));
 		username.setColumns(10);
 		username.setCaretColor(Color.BLACK);
 		username.setBorder(null);
-		username.setBounds(42, 95, 300, 34);
+		username.setBounds(42, 96, 300, 34);
 		loginPanel.add(username);
 
 		JSeparator s2 = new JSeparator();
@@ -202,8 +201,26 @@ public class LoginPage extends JFrame {
 		password.setOpaque(false);
 		password.setFont(new Font("Euclid Circular A", Font.PLAIN, 16));
 		password.setBorder(null);
-		password.setBounds(42, 167, 300, 34);
+		password.setBounds(42, 171, 260, 34);
 		loginPanel.add(password);
+		
+		JLabel showHidePass = new JLabel("");
+		showHidePass.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				showHidePass.setIcon(new ImageIcon(LoginPage.class.getResource("/resources/password_show.png")));
+				password.setEchoChar((char)0);
+			}
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				showHidePass.setIcon(new ImageIcon(LoginPage.class.getResource("/resources/password_hide.png")));
+				password.setEchoChar('•');
+			}
+		});
+		showHidePass.setIcon(new ImageIcon(LoginPage.class.getResource("/resources/password_hide.png")));
+		showHidePass.setBounds(302, 171, 40, 34);
+		loginPanel.add(showHidePass);
 
 		JLabel loginError = new JLabel(
 				"<html><center>\r\n* Incorrect Username or Password *<br>\r\nPlease try again!\r\n</center></html>");

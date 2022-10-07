@@ -327,9 +327,9 @@ public class Dashboard extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				moneyTransferPanel.setOpaque(true);
-				MoneyTransferPage bysp = new MoneyTransferPage(username);
-				bysp.setLocationRelativeTo(null);
-				bysp.setVisible(true);
+				MoneyTransferPage mtp = new MoneyTransferPage(username, String.valueOf(accountNo.getPassword()));
+				mtp.setLocationRelativeTo(null);
+				mtp.setVisible(true);
 				dispose();
 			}
 		});
@@ -369,9 +369,9 @@ public class Dashboard extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				balanceEnquiryPanel.setOpaque(true);
-				BalanceEnquiryPage vap = new BalanceEnquiryPage(username);
-				vap.setLocationRelativeTo(null);
-				vap.setVisible(true);
+				BalanceEnquiryPage bep = new BalanceEnquiryPage(username, String.valueOf(accountNo.getPassword()));
+				bep.setLocationRelativeTo(null);
+				bep.setVisible(true);
 				dispose();
 			}
 		});

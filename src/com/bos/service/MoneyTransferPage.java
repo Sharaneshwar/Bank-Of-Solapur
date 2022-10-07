@@ -9,17 +9,25 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+
+import com.bos.dao.SelectOperations;
+import com.bos.dao.UpdateOperations;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MoneyTransferPage extends JFrame {
 
@@ -36,7 +44,7 @@ public class MoneyTransferPage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MoneyTransferPage frame = new MoneyTransferPage("");
+					MoneyTransferPage frame = new MoneyTransferPage("", "");
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -49,7 +57,10 @@ public class MoneyTransferPage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MoneyTransferPage(String username) {
+	public MoneyTransferPage(String username, String accountNo) {
+		SelectOperations so = new SelectOperations();
+		ArrayList<String> al = so.select_account_numbers();
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 650);
 		contentPane = new JPanel();
@@ -129,6 +140,16 @@ public class MoneyTransferPage extends JFrame {
 		hamburger_panel.setLayout(null);
 
 		JPanel myProfilePanel = new JPanel();
+		myProfilePanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				myProfilePanel.setOpaque(true);
+				Dashboard db = new Dashboard(username);
+				db.setLocationRelativeTo(null);
+				db.setVisible(true);
+				dispose();
+			}
+		});
 		myProfilePanel.setOpaque(false);
 		myProfilePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		myProfilePanel.setBackground(new Color(102, 0, 0, 50));
@@ -155,16 +176,6 @@ public class MoneyTransferPage extends JFrame {
 		myProfilePanel.add(s1);
 
 		JPanel moneyTransferPanel = new JPanel();
-		moneyTransferPanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				moneyTransferPanel.setOpaque(true);
-				MoneyTransferPage bysp = new MoneyTransferPage(username);
-				bysp.setLocationRelativeTo(null);
-				bysp.setVisible(true);
-				dispose();
-			}
-		});
 		moneyTransferPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		moneyTransferPanel.setBackground(new Color(102, 0, 0, 50));
 		moneyTransferPanel.setLayout(null);
@@ -200,9 +211,9 @@ public class MoneyTransferPage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				balanceEnquiryPanel.setOpaque(true);
-				BalanceEnquiryPage vap = new BalanceEnquiryPage(username);
-				vap.setLocationRelativeTo(null);
-				vap.setVisible(true);
+				BalanceEnquiryPage bep = new BalanceEnquiryPage(username, accountNo);
+				bep.setLocationRelativeTo(null);
+				bep.setVisible(true);
 				dispose();
 			}
 		});
@@ -290,7 +301,7 @@ public class MoneyTransferPage extends JFrame {
 		guidelines.setFont(new Font("Teko", Font.PLAIN, 38));
 		guidelines.setBounds(0, 180, 230, 293);
 		hamburger_panel.add(guidelines);
-		
+
 		JLabel lblMoneyTransfer = new JLabel("MONEY TRANSFER");
 		lblMoneyTransfer.setOpaque(true);
 		lblMoneyTransfer.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -347,14 +358,14 @@ public class MoneyTransferPage extends JFrame {
 		s1_1.setBackground(new Color(102, 0, 0));
 		s1_1.setBounds(128, 128, 310, 5);
 		moneyTransferSection.add(s1_1);
-		
+
 		JLabel lblTo = new JLabel("TO");
 		lblTo.setForeground(Color.BLACK);
 		lblTo.setFont(new Font("Euclid Circular A", Font.BOLD, 17));
 		lblTo.setFocusable(true);
 		lblTo.setBounds(128, 156, 105, 29);
 		moneyTransferSection.add(lblTo);
-		
+
 		toAccountNo = new JTextField("Enter Transferee's Account Number");
 		toAccountNo.addFocusListener(new FocusListener() {
 			@Override
@@ -381,35 +392,37 @@ public class MoneyTransferPage extends JFrame {
 		toAccountNo.setBorder(null);
 		toAccountNo.setBounds(128, 184, 310, 34);
 		moneyTransferSection.add(toAccountNo);
-		
+
 		JSeparator s1_1_1 = new JSeparator();
 		s1_1_1.setForeground(new Color(102, 0, 0));
 		s1_1_1.setBackground(new Color(102, 0, 0));
 		s1_1_1.setBounds(128, 216, 310, 5);
 		moneyTransferSection.add(s1_1_1);
-		
+
 		JLabel lblAmount = new JLabel("AMOUNT");
 		lblAmount.setForeground(Color.BLACK);
 		lblAmount.setFont(new Font("Euclid Circular A", Font.BOLD, 17));
 		lblAmount.setFocusable(true);
 		lblAmount.setBounds(128, 247, 94, 29);
 		moneyTransferSection.add(lblAmount);
-		
+
 		amount = new JTextField("Enter Amount to be Transferred");
 		amount.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
 				if (amount.getText().equals("Enter Amount to be Transferred")) {
 					amount.setText("");
-					amount.setForeground(Color.BLACK);
+					amount.setFont(new Font("Euclid Circular A", Font.BOLD, 23));
+					amount.setForeground(new Color(102, 0, 0));
 				}
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (amount.getText().isEmpty()) {
-					amount.setForeground(Color.GRAY);
 					amount.setText("Enter Amount to be Transferred");
+					amount.setFont(new Font("Euclid Circular A", Font.PLAIN, 16));
+					amount.setForeground(Color.GRAY);
 				}
 			}
 		});
@@ -420,13 +433,13 @@ public class MoneyTransferPage extends JFrame {
 		amount.setBorder(null);
 		amount.setBounds(158, 275, 280, 34);
 		moneyTransferSection.add(amount);
-		
+
 		JSeparator s1_1_1_1 = new JSeparator();
 		s1_1_1_1.setForeground(new Color(102, 0, 0));
 		s1_1_1_1.setBackground(new Color(102, 0, 0));
 		s1_1_1_1.setBounds(128, 307, 310, 5);
 		moneyTransferSection.add(s1_1_1_1);
-		
+
 		JLabel lblRupee = new JLabel("E");
 		lblRupee.setForeground(new Color(102, 0, 0));
 		lblRupee.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -434,8 +447,146 @@ public class MoneyTransferPage extends JFrame {
 		lblRupee.setFont(new Font("ITF Rupee", Font.BOLD, 24));
 		lblRupee.setBounds(128, 280, 28, 29);
 		moneyTransferSection.add(lblRupee);
-		
+
+		JLabel toError = new JLabel("* Required");
+		toError.setVisible(false);
+		toError.setHorizontalTextPosition(SwingConstants.RIGHT);
+		toError.setHorizontalAlignment(SwingConstants.RIGHT);
+		toError.setForeground(Color.RED);
+		toError.setFont(new Font("Euclid Circular A", Font.PLAIN, 13));
+		toError.setBounds(264, 156, 174, 29);
+		moneyTransferSection.add(toError);
+
+		JLabel amountError = new JLabel("* Required");
+		amountError.setVisible(false);
+		amountError.setHorizontalTextPosition(SwingConstants.RIGHT);
+		amountError.setHorizontalAlignment(SwingConstants.RIGHT);
+		amountError.setForeground(Color.RED);
+		amountError.setFont(new Font("Euclid Circular A", Font.PLAIN, 13));
+		amountError.setBounds(264, 247, 174, 29);
+		moneyTransferSection.add(amountError);
+
+		JLabel fromError = new JLabel("* Required");
+		fromError.setVisible(false);
+		fromError.setHorizontalTextPosition(SwingConstants.RIGHT);
+		fromError.setHorizontalAlignment(SwingConstants.RIGHT);
+		fromError.setForeground(Color.RED);
+		fromError.setFont(new Font("Euclid Circular A", Font.PLAIN, 13));
+		fromError.setBounds(264, 68, 174, 29);
+		moneyTransferSection.add(fromError);
+
 		JButton btnTransferMoney = new JButton("TRANSFER MONEY");
+		btnTransferMoney.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean valFromAccountNo, valToAccountNo, valAmount;
+
+				valFromAccountNo = fromAccountNo.getText().equals("Enter Your Account Number");
+				if (valFromAccountNo) {
+					fromError.setText("* Required");
+					fromError.setVisible(true);
+				} else {
+					valFromAccountNo = !(accountNo.equals(fromAccountNo.getText()));
+					if (valFromAccountNo) {
+						fromError.setText("* Invalid Account Number");
+						fromError.setVisible(true);
+					} else {
+						fromError.setVisible(false);
+					}
+				}
+
+				valToAccountNo = toAccountNo.getText().equals("Enter Transferee's Account Number");
+				if (valToAccountNo) {
+					toError.setText("* Required");
+					toError.setVisible(true);
+				} else {
+					valToAccountNo = toAccountNo.getText().equals(accountNo);
+					if (valToAccountNo) {
+						toError.setText("* Invalid Account Number");
+						toError.setVisible(true);
+					} else {
+						for (String element : al) {
+							if (element.equals(toAccountNo.getText())) {
+								valToAccountNo = false;
+								break;
+							} else {
+								valToAccountNo = true;
+							}
+						}
+						if (valToAccountNo) {
+							toError.setText("* Invalid Account Number");
+							toError.setVisible(true);
+						} else {
+							toError.setVisible(false);
+						}
+					}
+				}
+
+				valAmount = amount.getText().equals("Enter Amount to be Transferred");
+				if (valAmount) {
+					amountError.setText("* Required");
+					amountError.setVisible(true);
+				} else {
+					for (int i = 0; i < amount.getText().length(); i++) {
+						if (Character.isLetter(amount.getText().charAt(i))) {
+							valAmount = true;
+							break;
+						} else {
+							valAmount = false;
+						}
+					}
+					if (valAmount) {
+						amountError.setText("* Invalid Amount");
+						amountError.setVisible(true);
+					} else {
+						valAmount = Integer.parseInt(amount.getText()) < 1;
+						if (valAmount) {
+							amountError.setText("* Invalid Amount");
+							amountError.setVisible(true);
+						} else {
+							amountError.setVisible(false);
+						}
+					}
+				}
+
+				if (!(valFromAccountNo || valToAccountNo || valAmount)) {
+					String[] options = { "CHECK" };
+					JPanel panel = new JPanel();
+					JLabel lbl = new JLabel("Enter Password to Confirm: ");
+					JPasswordField pwd = new JPasswordField(10);
+					panel.add(lbl);
+					panel.add(pwd);
+					int selectedOption = JOptionPane.showOptionDialog(null, panel, "Alert", JOptionPane.NO_OPTION,
+							JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+					if (selectedOption == 0) {
+						double fromBalance = Double.parseDouble(so.select_balance(accountNo));
+						double toBalance = Double.parseDouble(so.select_balance(toAccountNo.getText()));
+						double enteredAmount = Double.parseDouble(amount.getText());
+						if (fromBalance > enteredAmount) {
+							fromBalance -= enteredAmount;
+							toBalance += enteredAmount;
+							UpdateOperations uo = new UpdateOperations();
+							int rows1 = uo.update_balance(accountNo, String.format("%.2f", fromBalance));
+							int rows2 = uo.update_balance(toAccountNo.getText(), String.format("%.2f", toBalance));
+							if (rows1 == 0 || rows2 == 0) {
+								JOptionPane.showMessageDialog(null, "Error in Transferring!\nPlease Try Again!",
+										"Error", JOptionPane.ERROR_MESSAGE);
+							} else {
+								JOptionPane.showMessageDialog(null, "Amount Transfer Successfull!", "Success",
+										JOptionPane.INFORMATION_MESSAGE);
+								myProfilePanel.setOpaque(true);
+								Dashboard db = new Dashboard(username);
+								db.setLocationRelativeTo(null);
+								db.setVisible(true);
+								dispose();
+							}
+						} else {
+							JOptionPane.showMessageDialog(null, "Insufficient Balance to Transfer!", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				}
+			}
+		});
 		btnTransferMoney.setForeground(Color.WHITE);
 		btnTransferMoney.setFont(new Font("Euclid Circular A", Font.BOLD, 17));
 		btnTransferMoney.setBorderPainted(false);

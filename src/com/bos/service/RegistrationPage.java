@@ -152,15 +152,16 @@ public class RegistrationPage extends JFrame {
 		h2.setBounds(119, 46, 376, 49);
 		headerPanel.add(h2);
 		
-		JLabel RegisterLabel = new JLabel("REGISTRATION FORM");
-		RegisterLabel.setOpaque(true);
-		RegisterLabel.setForeground(new Color(102, 0, 0));
-		RegisterLabel.setBounds(300, 147, 299, 33);
-		contentPane.add(RegisterLabel);
-		RegisterLabel.setFont(new Font("Euclid Circular A", Font.BOLD, 26));
-		RegisterLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		RegisterLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		RegisterLabel.setBackground(new Color(255, 238, 207));
+		JLabel registerLabel = new JLabel("REGISTRATION FORM");
+		registerLabel.setFocusable(true);
+		registerLabel.setOpaque(true);
+		registerLabel.setForeground(new Color(102, 0, 0));
+		registerLabel.setBounds(300, 147, 299, 33);
+		contentPane.add(registerLabel);
+		registerLabel.setFont(new Font("Euclid Circular A", Font.BOLD, 26));
+		registerLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		registerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		registerLabel.setBackground(new Color(255, 238, 207));
 
 		JPanel registerPanel = new JPanel();
 		registerPanel.setBorder(new LineBorder(new Color(102, 0, 0), 3, true));
@@ -220,7 +221,6 @@ public class RegistrationPage extends JFrame {
 		registerPanel.add(confirmPassLabel);
 
 		fullName = new JTextField();
-		fullName.setToolTipText("");
 		fullName.setOpaque(false);
 		fullName.setCaretColor(new Color(0, 0, 0));
 		fullName.setBorder(null);
@@ -230,7 +230,6 @@ public class RegistrationPage extends JFrame {
 		fullName.setColumns(10);
 
 		mobileNo = new JTextField();
-		mobileNo.setToolTipText("");
 		mobileNo.setOpaque(false);
 		mobileNo.setFont(new Font("Euclid Circular A", Font.PLAIN, 16));
 		mobileNo.setColumns(10);
@@ -240,7 +239,6 @@ public class RegistrationPage extends JFrame {
 		registerPanel.add(mobileNo);
 
 		emailID = new JTextField();
-		emailID.setToolTipText("");
 		emailID.setOpaque(false);
 		emailID.setFont(new Font("Euclid Circular A", Font.PLAIN, 16));
 		emailID.setColumns(10);

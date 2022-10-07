@@ -2,46 +2,38 @@ package com.bos.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
 
-public class CheckAccountDetails implements DatabaseConstants{
-	HashMap<String, String> hm = new HashMap<String, String>();
+public class UpdateOperations implements DatabaseConstants{
 	Connection con = null;
 	Statement st = null;
-	ResultSet rs = null;
-	
-	public void select_account_details() {
+
+	public int update_balance(String accountNo, String balance) {
+		int rows = 0;
 		try {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT ACCOUNT_NO, BALANCE FROM account_details");
-			while (rs.next()) {
-				hm.put(rs.getString(1), rs.getString(2));
-			}
+			rows = st.executeUpdate("UPDATE account_details SET BALANCE = '" + balance + "' WHERE ACCOUNT_NO = '" + accountNo +"'");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				rs.close();
+				if (st != null)
+					st.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 			try {
-				st.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			try {
-				con.close();
+				if (con != null)
+					con.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
+		return rows;
 	}
 }

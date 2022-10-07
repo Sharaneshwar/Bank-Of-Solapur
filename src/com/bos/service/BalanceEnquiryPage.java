@@ -18,10 +18,13 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import com.bos.dao.SelectOperations;
+
 public class BalanceEnquiryPage extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JPasswordField balanceAmount;
 
 	/**
 	 * Launch the application.
@@ -30,7 +33,7 @@ public class BalanceEnquiryPage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BalanceEnquiryPage frame = new BalanceEnquiryPage("");
+					BalanceEnquiryPage frame = new BalanceEnquiryPage("", "");
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -43,7 +46,9 @@ public class BalanceEnquiryPage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public BalanceEnquiryPage(String username) {
+	public BalanceEnquiryPage(String username, String accountNo) {
+		SelectOperations so = new SelectOperations();
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 650);
 		contentPane = new JPanel();
@@ -54,7 +59,7 @@ public class BalanceEnquiryPage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setUndecorated(true);
-		
+
 		JPanel headerPanel = new JPanel();
 		headerPanel.setOpaque(false);
 		headerPanel.setLayout(null);
@@ -113,7 +118,7 @@ public class BalanceEnquiryPage extends JFrame {
 		h2.setAlignmentY(0.0f);
 		h2.setBounds(119, 46, 376, 49);
 		headerPanel.add(h2);
-		
+
 		JPanel hamburger_panel = new JPanel();
 		hamburger_panel.setOpaque(false);
 		hamburger_panel.setBackground(new Color(102, 0, 0));
@@ -123,6 +128,16 @@ public class BalanceEnquiryPage extends JFrame {
 		hamburger_panel.setLayout(null);
 
 		JPanel myProfilePanel = new JPanel();
+		myProfilePanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				myProfilePanel.setOpaque(true);
+				Dashboard db = new Dashboard(username);
+				db.setLocationRelativeTo(null);
+				db.setVisible(true);
+				dispose();
+			}
+		});
 		myProfilePanel.setOpaque(false);
 		myProfilePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		myProfilePanel.setBackground(new Color(102, 0, 0, 50));
@@ -153,9 +168,9 @@ public class BalanceEnquiryPage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				moneyTransferPanel.setOpaque(true);
-				MoneyTransferPage bysp = new MoneyTransferPage(username);
-				bysp.setLocationRelativeTo(null);
-				bysp.setVisible(true);
+				MoneyTransferPage mtp = new MoneyTransferPage(username, accountNo);
+				mtp.setLocationRelativeTo(null);
+				mtp.setVisible(true);
 				dispose();
 			}
 		});
@@ -191,16 +206,6 @@ public class BalanceEnquiryPage extends JFrame {
 		moneyTransferPanel.add(s2);
 
 		JPanel balanceEnquiryPanel = new JPanel();
-		balanceEnquiryPanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				balanceEnquiryPanel.setOpaque(true);
-				BalanceEnquiryPage vap = new BalanceEnquiryPage(username);
-				vap.setLocationRelativeTo(null);
-				vap.setVisible(true);
-				dispose();
-			}
-		});
 		balanceEnquiryPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		balanceEnquiryPanel.setBackground(new Color(102, 0, 0, 50));
 		balanceEnquiryPanel.setLayout(null);
@@ -284,7 +289,7 @@ public class BalanceEnquiryPage extends JFrame {
 		guidelines.setFont(new Font("Teko", Font.PLAIN, 38));
 		guidelines.setBounds(0, 180, 230, 293);
 		hamburger_panel.add(guidelines);
-		
+
 		JLabel lblAvailableBalance = new JLabel("AVAILABLE BALANCE");
 		lblAvailableBalance.setOpaque(true);
 		lblAvailableBalance.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -294,15 +299,15 @@ public class BalanceEnquiryPage extends JFrame {
 		lblAvailableBalance.setBackground(new Color(255, 238, 207));
 		lblAvailableBalance.setBounds(369, 167, 317, 33);
 		contentPane.add(lblAvailableBalance);
-		
-		JPanel moneyTransferSection = new JPanel();
-		moneyTransferSection.setLayout(null);
-		moneyTransferSection.setOpaque(false);
-		moneyTransferSection.setBorder(new LineBorder(new Color(102, 0, 0), 2, true));
-		moneyTransferSection.setBounds(345, 181, 439, 120);
-		contentPane.add(moneyTransferSection);
-		
-		JPasswordField balanceAmount = new JPasswordField("2500.00");
+
+		JPanel balanceEnquirySection = new JPanel();
+		balanceEnquirySection.setLayout(null);
+		balanceEnquirySection.setOpaque(false);
+		balanceEnquirySection.setBorder(new LineBorder(new Color(102, 0, 0), 2, true));
+		balanceEnquirySection.setBounds(345, 181, 439, 120);
+		contentPane.add(balanceEnquirySection);
+
+		balanceAmount = new JPasswordField(so.select_balance(accountNo));
 		balanceAmount.setEchoChar('X');
 		balanceAmount.setBorder(null);
 		balanceAmount.setOpaque(false);
@@ -310,28 +315,28 @@ public class BalanceEnquiryPage extends JFrame {
 		balanceAmount.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(balanceAmount.getEchoChar() == 'X') {
-					balanceAmount.setEchoChar((char)0);
+				if (balanceAmount.getEchoChar() == 'X') {
+					balanceAmount.setEchoChar((char) 0);
 				} else {
 					balanceAmount.setEchoChar('X');
 				}
-					
+
 			}
 		});
 		balanceAmount.setHorizontalAlignment(SwingConstants.LEFT);
 		balanceAmount.setForeground(Color.BLACK);
 		balanceAmount.setFont(new Font("Teko", Font.BOLD, 38));
 		balanceAmount.setBounds(63, 34, 354, 57);
-		moneyTransferSection.add(balanceAmount);
-		
+		balanceEnquirySection.add(balanceAmount);
+
 		JLabel lblRupee = new JLabel("₹");
 		lblRupee.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblRupee.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRupee.setForeground(Color.BLACK);
 		lblRupee.setFont(new Font("Teko", Font.BOLD, 38));
 		lblRupee.setBounds(23, 34, 38, 57);
-		moneyTransferSection.add(lblRupee);
-		
+		balanceEnquirySection.add(lblRupee);
+
 		JLabel bg = new JLabel("");
 		bg.setIcon(new ImageIcon(LoginPage.class.getResource("/resources/bgFinal.png")));
 		bg.setBackground(Color.WHITE);

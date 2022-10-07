@@ -18,12 +18,12 @@ public class SelectOperations implements DatabaseConstants {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			st = con.createStatement();
-			
+
 			rs = st.executeQuery("SELECT ACCOUNT_NO FROM account_details WHERE EMAIL_ID = '" + username + "'");
 			while (rs.next()) {
 				al.add(rs.getString("ACCOUNT_NO"));
 			}
-			
+
 			rs = st.executeQuery("SELECT FULL_NAME, MOBILE_NO, DOB, GENDER FROM REGISTRATION_TABLE WHERE EMAIL_ID = '"
 					+ username + "'");
 			while (rs.next()) {
@@ -88,5 +88,108 @@ public class SelectOperations implements DatabaseConstants {
 			}
 		}
 		return id;
+	}
+
+	public ArrayList<String> select_account_numbers() {
+		ArrayList<String> al = new ArrayList<String>();
+		try {
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			st = con.createStatement();
+
+			rs = st.executeQuery("SELECT ACCOUNT_NO FROM account_details");
+			while (rs.next()) {
+				al.add(rs.getString("ACCOUNT_NO"));
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return al;
+	}
+	
+	public String select_balance(String accountNo) {
+		String balance = "";
+		try {
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT BALANCE FROM account_details WHERE ACCOUNT_NO = '" + accountNo + "'");
+			while (rs.next()) {
+				balance = rs.getString("BALANCE");
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return balance;
+	}
+	
+	public String select_password(String username) {
+		String password = "";
+		try {
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT PASSWORD FROM registration_table WHERE EMAIL_ID = '" + username + "'");
+			while (rs.next()) {
+				password = rs.getString("PASSWORD");
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return password;
 	}
 }
