@@ -5,29 +5,31 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import com.bos.dao.SelectOperations;
 import com.bos.dao.UpdateOperations;
-
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import com.bos.utility.EmailMessaging;
 
 public class MoneyTransferPage extends JFrame {
 
@@ -426,12 +428,24 @@ public class MoneyTransferPage extends JFrame {
 				}
 			}
 		});
+		amount.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyChar() >= '0' && e.getKeyChar() <= '9') {
+					amount.setEditable(true);
+				} else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_DELETE) {
+					amount.setEditable(true);
+				} else {
+					amount.setEditable(false);
+				}
+			}
+		});
 		amount.setOpaque(false);
 		amount.setForeground(Color.GRAY);
 		amount.setFont(new Font("Euclid Circular A", Font.PLAIN, 16));
 		amount.setCaretColor(Color.BLACK);
 		amount.setBorder(null);
-		amount.setBounds(158, 275, 280, 34);
+		amount.setBounds(157, 274, 280, 34);
 		moneyTransferSection.add(amount);
 
 		JSeparator s1_1_1_1 = new JSeparator();
@@ -440,12 +454,12 @@ public class MoneyTransferPage extends JFrame {
 		s1_1_1_1.setBounds(128, 307, 310, 5);
 		moneyTransferSection.add(s1_1_1_1);
 
-		JLabel lblRupee = new JLabel("E");
+		JLabel lblRupee = new JLabel("₹");
 		lblRupee.setForeground(new Color(102, 0, 0));
 		lblRupee.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblRupee.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRupee.setFont(new Font("ITF Rupee", Font.BOLD, 24));
-		lblRupee.setBounds(128, 280, 28, 29);
+		lblRupee.setFont(new Font("Dialog", Font.BOLD, 24));
+		lblRupee.setBounds(122, 274, 34, 34);
 		moneyTransferSection.add(lblRupee);
 
 		JLabel toError = new JLabel("* Required");
@@ -571,6 +585,8 @@ public class MoneyTransferPage extends JFrame {
 								JOptionPane.showMessageDialog(null, "Error in Transferring!\nPlease Try Again!",
 										"Error", JOptionPane.ERROR_MESSAGE);
 							} else {
+								EmailMessaging em = new EmailMessaging();
+								em.send_notification(fromAccountNo.getText(), toAccountNo.getText(), amount.getText());
 								JOptionPane.showMessageDialog(null, "Amount Transfer Successfull!", "Success",
 										JOptionPane.INFORMATION_MESSAGE);
 								myProfilePanel.setOpaque(true);

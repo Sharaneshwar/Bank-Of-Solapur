@@ -124,7 +124,7 @@ public class SelectOperations implements DatabaseConstants {
 		}
 		return al;
 	}
-	
+
 	public String select_balance(String accountNo) {
 		String balance = "";
 		try {
@@ -158,7 +158,7 @@ public class SelectOperations implements DatabaseConstants {
 		}
 		return balance;
 	}
-	
+
 	public String select_password(String username) {
 		String password = "";
 		try {
@@ -191,5 +191,39 @@ public class SelectOperations implements DatabaseConstants {
 			}
 		}
 		return password;
+	}
+
+	public String select_username(String accountNo) {
+		String username = "";
+		try {
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT EMAIL_ID FROM account_details WHERE ACCOUNT_NO = '" + accountNo + "'");
+			while (rs.next()) {
+				username = rs.getString("EMAIL_ID");
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return username;
 	}
 }
