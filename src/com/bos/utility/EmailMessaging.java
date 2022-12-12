@@ -19,7 +19,7 @@ public class EmailMessaging {
 	public int send_notification(String fromAccountNo, String toAccountNo, String amount) {
 		SelectOperations so = new SelectOperations();
 
-		SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+		SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
 		String message1 = String.format("<html>" + "<body>"
 				+ "<div style = \"font-size: 16px\">A/C holder <b>*%s</b> Debited for Rs. <b>%s</b> on <b>%s</b> to A/C holder <b>*%s</b>. Available Balance Rs. <b>%s</b><br>"
 				+ "Thank You! - Bank Of Solapur" + "</div>" + "</html>", fromAccountNo.substring(8), amount,
