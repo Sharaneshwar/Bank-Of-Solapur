@@ -79,8 +79,7 @@ public class LoginPage extends JFrame {
 		closeLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int choice = JOptionPane.showConfirmDialog(null, "Do you really want to exit?", "Alert",
-						JOptionPane.YES_NO_OPTION);
+				int choice = JOptionPane.showConfirmDialog(null, "Do you really want to exit?", "Alert", JOptionPane.YES_NO_OPTION);
 				if (choice == JOptionPane.YES_OPTION) {
 					setVisible(false);
 					dispose();
@@ -98,8 +97,7 @@ public class LoginPage extends JFrame {
 		homeLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int choice = JOptionPane.showConfirmDialog(null, "Do you want to cancel the login?", "Alert",
-						JOptionPane.YES_NO_OPTION);
+				int choice = JOptionPane.showConfirmDialog(null, "Do you want to cancel the login?", "Alert", JOptionPane.YES_NO_OPTION);
 				if (choice == JOptionPane.YES_OPTION) {
 					HomePage hPage = new HomePage();
 					hPage.setLocationRelativeTo(null);
@@ -222,8 +220,7 @@ public class LoginPage extends JFrame {
 		showHidePass.setBounds(302, 171, 40, 34);
 		loginPanel.add(showHidePass);
 
-		JLabel loginError = new JLabel(
-				"<html><center>\r\n* Incorrect Username or Password *<br>\r\nPlease try again!\r\n</center></html>");
+		JLabel loginError = new JLabel("<html><center>\r\n* Incorrect Username or Password *<br>\r\nPlease try again!\r\n</center></html>");
 		loginError.setVisible(false);
 		loginError.setForeground(Color.RED);
 		loginError.setFont(new Font("Euclid Circular A", Font.PLAIN, 14));

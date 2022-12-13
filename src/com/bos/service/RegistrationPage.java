@@ -87,8 +87,7 @@ public class RegistrationPage extends JFrame {
 		closeLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int choice = JOptionPane.showConfirmDialog(null, "Do you really want to exit?", "Alert",
-						JOptionPane.YES_NO_OPTION);
+				int choice = JOptionPane.showConfirmDialog(null, "Do you really want to exit?", "Alert", JOptionPane.YES_NO_OPTION);
 				if (choice == JOptionPane.YES_OPTION) {
 					setVisible(false);
 					dispose();
@@ -106,8 +105,7 @@ public class RegistrationPage extends JFrame {
 		homeLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int choice = JOptionPane.showConfirmDialog(null, "Do you want to cancel the login?", "Alert",
-						JOptionPane.YES_NO_OPTION);
+				int choice = JOptionPane.showConfirmDialog(null, "Do you want to cancel the login?", "Alert", JOptionPane.YES_NO_OPTION);
 				if (choice == JOptionPane.YES_OPTION) {
 					HomePage hPage = new HomePage();
 					hPage.setLocationRelativeTo(null);

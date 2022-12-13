@@ -24,8 +24,7 @@ public class SelectOperations implements DatabaseConstants {
 				al.add(rs.getString("ACCOUNT_NO"));
 			}
 
-			rs = st.executeQuery("SELECT FULL_NAME, MOBILE_NO, DOB, GENDER FROM REGISTRATION_TABLE WHERE EMAIL_ID = '"
-					+ username + "'");
+			rs = st.executeQuery("SELECT FULL_NAME, MOBILE_NO, DOB, GENDER FROM REGISTRATION_TABLE WHERE EMAIL_ID = '" + username + "'");
 			while (rs.next()) {
 				al.add(rs.getString("FULL_NAME"));
 				al.add(rs.getString("MOBILE_NO"));

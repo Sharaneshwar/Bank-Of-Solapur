@@ -20,15 +20,8 @@ public class EmailMessaging {
 		SelectOperations so = new SelectOperations();
 
 		SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
-		String message1 = String.format("<html>" + "<body>"
-				+ "<div style = \"font-size: 16px\">A/C holder <b>*%s</b> Debited for Rs. <b>%s</b> on <b>%s</b> to A/C holder <b>*%s</b>. Available Balance Rs. <b>%s</b><br>"
-				+ "Thank You! - Bank Of Solapur" + "</div>" + "</html>", fromAccountNo.substring(8), amount,
-				format2.format(new Date()), toAccountNo.substring(8), so.select_balance(fromAccountNo));
-		String message2 = String.format("<html>" + "<body>"
-				+ "<div style = \"font-size: 16px\">A/C holder <b>*%s</b> Credited for Rs. <b>%s</b> on <b>%s</b> by A/C holder <b>*%s</b>. Available Balance Rs. <b>%s</b><br>"
-				+ "Thank You! - Bank Of Solapur" + "</div>" + "</html>", toAccountNo.substring(8), amount,
-				format2.format(new Date()), fromAccountNo.substring(8), so.select_balance(toAccountNo));
-
+		String message1 = String.format("<html><body><div style = \"font-size: 16px\">A/C holder <b>*%s</b> Debited for Rs. <b>%s</b> on <b>%s</b> to A/C holder <b>*%s</b>. Available Balance Rs. <b>%s</b><br>Thank You! - Bank Of Solapur</div></html>", fromAccountNo.substring(8), amount, format2.format(new Date()), toAccountNo.substring(8), so.select_balance(fromAccountNo));
+		String message2 = String.format("<html><body><div style = \"font-size: 16px\">A/C holder <b>*%s</b> Credited for Rs. <b>%s</b> on <b>%s</b> by A/C holder <b>*%s</b>. Available Balance Rs. <b>%s</b><br>Thank You! - Bank Of Solapur</div></html>", toAccountNo.substring(8), amount, format2.format(new Date()), fromAccountNo.substring(8), so.select_balance(toAccountNo));
 		String subject1 = String.format("Rs. %s debited from your BOS Account", amount);
 		String subject2 = String.format("Rs. %s credited to your BOS Account", amount);
 		String to1 = so.select_username(fromAccountNo);
