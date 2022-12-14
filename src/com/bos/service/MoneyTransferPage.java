@@ -89,7 +89,8 @@ public class MoneyTransferPage extends JFrame {
 		closeLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int choice = JOptionPane.showConfirmDialog(null, "Do you really want to exit?", "Alert", JOptionPane.YES_NO_OPTION);
+				int choice = JOptionPane.showConfirmDialog(null, "Do you really want to exit?", "Alert",
+						JOptionPane.YES_NO_OPTION);
 				if (choice == JOptionPane.YES_OPTION) {
 					setVisible(false);
 					dispose();
@@ -345,6 +346,18 @@ public class MoneyTransferPage extends JFrame {
 				}
 			}
 		});
+		fromAccountNo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyChar() >= '0' && e.getKeyChar() <= '9') {
+					fromAccountNo.setEditable(true);
+				} else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_DELETE) {
+					fromAccountNo.setEditable(true);
+				} else {
+					fromAccountNo.setEditable(false);
+				}
+			}
+		});
 		fromAccountNo.setForeground(Color.GRAY);
 		fromAccountNo.setOpaque(false);
 		fromAccountNo.setFont(new Font("Euclid Circular A", Font.PLAIN, 16));
@@ -382,6 +395,18 @@ public class MoneyTransferPage extends JFrame {
 				if (toAccountNo.getText().isEmpty()) {
 					toAccountNo.setForeground(Color.GRAY);
 					toAccountNo.setText("Enter Transferee's Account Number");
+				}
+			}
+		});
+		toAccountNo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyChar() >= '0' && e.getKeyChar() <= '9') {
+					toAccountNo.setEditable(true);
+				} else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_DELETE) {
+					toAccountNo.setEditable(true);
+				} else {
+					toAccountNo.setEditable(false);
 				}
 			}
 		});
@@ -568,7 +593,8 @@ public class MoneyTransferPage extends JFrame {
 					JPasswordField pwd = new JPasswordField(10);
 					panel.add(lbl);
 					panel.add(pwd);
-					int selectedOption = JOptionPane.showOptionDialog(null, panel, "Alert", JOptionPane.NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+					int selectedOption = JOptionPane.showOptionDialog(null, panel, "Alert", JOptionPane.NO_OPTION,
+							JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 					if (selectedOption == 0) {
 						double fromBalance = Double.parseDouble(so.select_balance(accountNo));
 						double toBalance = Double.parseDouble(so.select_balance(toAccountNo.getText()));
@@ -580,11 +606,13 @@ public class MoneyTransferPage extends JFrame {
 							int rows1 = uo.update_balance(accountNo, String.format("%.2f", fromBalance));
 							int rows2 = uo.update_balance(toAccountNo.getText(), String.format("%.2f", toBalance));
 							if (rows1 == 0 || rows2 == 0) {
-								JOptionPane.showMessageDialog(null, "Error in Transferring!\nPlease Try Again!", "Error", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Error in Transferring!\nPlease Try Again!",
+										"Error", JOptionPane.ERROR_MESSAGE);
 							} else {
 								EmailMessaging em = new EmailMessaging();
 								em.send_notification(fromAccountNo.getText(), toAccountNo.getText(), amount.getText());
-								JOptionPane.showMessageDialog(null, "Amount Transfer Successfull!", "Success", JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Amount Transfer Successfull!", "Success",
+										JOptionPane.INFORMATION_MESSAGE);
 								myProfilePanel.setOpaque(true);
 								Dashboard db = new Dashboard(username);
 								db.setLocationRelativeTo(null);
@@ -592,7 +620,8 @@ public class MoneyTransferPage extends JFrame {
 								dispose();
 							}
 						} else {
-							JOptionPane.showMessageDialog(null, "Insufficient Balance to Transfer!", "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Insufficient Balance to Transfer!", "Error",
+									JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				}
