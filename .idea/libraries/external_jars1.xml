@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="external_jars1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/external_jars/javax.mail-1.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/external_jars/jcalendar-1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/external_jars/activation-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/external_jars/mysql-connector-java-5.1.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
